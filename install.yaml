@@ -7661,7 +7661,7 @@ spec:
         runAsNonRoot: true
       serviceAccountName: kyverno-service-account
 ---
-apiVersion: policy/v1
+apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
   labels:
