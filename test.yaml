@@ -1,9 +1,38 @@
-apiVersion: v1
-kind: Pod
+---
+kind: "Deployment"
+apiVersion: "apps/v1"
 metadata:
-  name: nginx
+  annotations: {}
+  name: "nginx-deployment"
+  labels:
+    nirmata.io/component: "nginx-deployment"
 spec:
-  containers:
-  - image: registry-v2.nirmata.io/nirmata/nginx
-    name: nginx
-  restartPolicy: Always
+  replicas: 1
+  revisionHitoryLimit: 5
+  selector:
+    matchLabels:
+      app: "nginx"
+      nirmata.io/component: "nginx-deployment"
+    matchExpressions: []
+  strategy:
+    type: "RollingUpdate"
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      annotations: {}
+      labels:
+        app: "nginx"
+        nirmata.io/component: "nginx-deployment"
+    spec:
+      terminationGracePeriodSeconds: 30
+      nodeSelector: {}
+      containers:
+      - name: "nginx"
+        image: "registry-v2.nirmata.io/nirmata/nginx:latest"
+        command: []
+        args: []
+        ports:
+        - containerPort: 80
+          protocol: "TCP"
