@@ -18,7 +18,7 @@ spec:
         app: nginx
     spec:
       containers:
-      - image: registry-v2.nirmata.io/nirmata/nginx:latest
+      - image: nginx
         name: nginx
         resources: {}
 status: {}
