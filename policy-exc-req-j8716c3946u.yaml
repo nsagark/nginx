@@ -1,0 +1,48 @@
+apiVersion: kyverno.io/v2beta1
+kind: PolicyException
+metadata:
+  labels:
+    cleanup.kyverno.io/ttl: 2025-07-22T182726Z
+  name: policy-exc-req-j8716c3946u-0
+  namespace: kyverno
+spec:
+  exceptions:
+  - policyName: disallow-privilege-escalation
+    ruleNames:
+    - privilege-escalation
+    - autogen-privilege-escalation
+  - policyName: require-run-as-nonroot
+    ruleNames:
+    - run-as-non-root
+    - autogen-run-as-non-root
+  - policyName: restrict-seccomp-strict
+    ruleNames:
+    - check-seccomp-strict
+    - autogen-check-seccomp-strict
+  - policyName: disallow-capabilities-strict
+    ruleNames:
+    - require-drop-all
+    - autogen-require-drop-all
+  match:
+    any:
+    - resources:
+        kinds:
+        - ReplicaSet
+        names:
+        - web-*
+        namespaces:
+        - dev10
+    - resources:
+        kinds:
+        - Deployment
+        names:
+        - web
+        namespaces:
+        - dev10
+    - resources:
+        kinds:
+        - Pod
+        names:
+        - web-*
+        namespaces:
+        - dev10
